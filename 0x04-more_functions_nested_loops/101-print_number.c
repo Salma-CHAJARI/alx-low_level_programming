@@ -8,7 +8,7 @@
 void print_number(int n)
 {
 	int div = 1;
-        int r = n;
+	int t = n;
 
 	if (n < 0)
 	{
@@ -16,17 +16,17 @@ void print_number(int n)
 		n = -n;
 	}
 
-	while (r > 9)
+	while (t / 10 > 0)
 	{
 		div *= 10;
-		r /= 10;
+		t /= 10;
 	}
 
 	while (div > 0)
 	{
-		int d = n / div;
+		int digit = n / div;
 
-		_putchar(d + '0');
+		_putchar(digit + '0');
 		n %= div;
 		div /= 10;
 	}
