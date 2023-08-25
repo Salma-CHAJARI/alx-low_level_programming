@@ -5,7 +5,8 @@
  * @n: integer
  * Return: 0
  */
-void rev_string(char *n) {
+void rev_string(char *n)
+{
 	int i = 0, j = 0;
 	char tmp;
 
@@ -30,7 +31,8 @@ void rev_string(char *n) {
  * @size_r: The size of the buffer
  * Return: 0 if buffer too small to store result, else return pointer to buffer
  */
-char *infinite_add(char *n1, char *n2, char *r, int size_r) {
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
+{
 	int overflow = 0, i = 0, j = 0, digit = 0;
 	int val1 = 0, val2 = 0, temp_tot = 0;
 
@@ -41,7 +43,7 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r) {
 	i--;
 	j--;
 	if (j >= size_r || i >= size_r)
-	return NULL;
+	return (NULL);
 	while (j >= 0 || i >= 0 || overflow == 1)
 	{
 	if (i < 0)
@@ -62,14 +64,14 @@ char *infinite_add(char *n1, char *n2, char *r, int size_r) {
 	overflow = 0;
 
 	if (digit >= (size_r - 1))
-	return NULL;
+	return (NULL);
 	*(r + digit) = temp_tot + '0';
 	digit++;
 	j--;
 	i--;
 	}
 	if (digit == size_r)
-	return NULL;
+	return (NULL);
 	*(r + digit) = '\0';
 	rev_string(r);
 	return (r);
