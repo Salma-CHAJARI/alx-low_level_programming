@@ -1,5 +1,28 @@
 #include "main.h"
 /**
+ * rev_string - reverse array dn: integer parans
+ * @n: integer
+ * Return: 0
+ */
+void rev_string(char *n)
+{
+	int i = 0, j = 0;
+	char tmp;
+
+	while (*(n + i) != '\0')
+	{
+		i++;
+	}
+	i--;
+	for (j = 0; j < i; j++, i--)
+	{
+		tmp = *(n + j);
+		*(n + j) = *(n + i);
+		*(n + i) = tmp;
+	}
+}
+
+/**
  * infinite_add - Add up two numbers stored in given char arrays
  * @n1: The first number
  * @n2: The second number
@@ -8,60 +31,46 @@
  *
  * Return: 0 if buffer too small to store result, else return pointer to buffer
  */
+
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int l1, l2, tmpl, rl, i, sum, num1, num2, carry;
-	char tmp[10000];
+	int overflow = 0, i = 0, j = 0, digit = 0;
+	int val1 = 0, val2 = 0, tmp_tot = 0;
 
-	rl = i = l1 = l2 = sum = num1 = num2 = carry = 0;
-	while (n1[l1] != '\0')
-		l1++;
-	while (n2[l2] != '\0')
-		l2++;
-	if (l1 + 2 > size_r || l2 + 2 > size_r)
-		return (0);
-	l1--;
-	l2--;
-	while (i <= l1 || i <= l2)
+	while (*(n1 + i) != '\0')
+	i++;
+	while (*(n2 + j) != '\0')
+	j++;
+	i--;
+	j--;
+
+	if (j >= size_r || i >= size_r)
+		return(0);
+	while (j >= 0 || i >= 0 || overflow == 1)
 	{
-		num1 = num2 = 0;
-		if (i <= l1)
-			num1 = n1[l1 - i] - '0';
-		if (i <= l2 && (l2 - i) >= 0)
-			num2 = n2[l2 - i] - '0';
-		sum = num1 + num2 + carry;
-		if (sum >= 10)
-		{
-			carry = 1;
-			sum -= 10;
-		}
+		if (i < 0)
+			val1 = 0;
 		else
-			carry = 0;
-		r[i] = sum + '0';
-		i++;
-		rl++;
+			val1 = *(n1 + i) - '0';
+		if (j < 0)
+			val2 = 0;
+		else
+			val2 = *(n1 + j) - '0';
+		tmp_tot = val1 + val2 + overflow;
+		if (tmp_tot >= 10)
+			overflow = 1;
+		else
+			overflow = 0;
+		if (digit >= (size_r - 1))
+			return (0);
+		*(r + digit) = (tmp_tot % 10) + '0';
+		digit++;
+		j--;
+		i--;
 	}
-	if (carry > 0)
-	{
-		r[i] = carry + '0';
-		r[i + 1] = '\0';
-	}
-	i = tmpl = 0;
-	while (i <= rl)
-	{
-		tmp[i] = r[rl - i];
-		tmpl++;
-		i++;
-	}
-	i = 0;
-	while (i < tmpl)
-	{
-		if (r[i] == '\0')
-		{
-			break;
-		}
-		r[i] = tmp[i];
-		i++;
-	}
+	if (digit == size_r)
+		return (0);
+	*(r + digit) = '\0';
+	rev_string(r);
 	return (r);
 }
